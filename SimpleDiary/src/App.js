@@ -2,6 +2,7 @@ import "./App.css";
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
 import { useState, useRef, useEffect, useMemo } from "react";
+import OptimizeTest from "./OptimizeTest";
 
 function App() {
   const [data, setData] = useState([]);
@@ -71,6 +72,7 @@ function App() {
 
   return (
     <div className="App">
+      <OptimizeTest />
       {/* <Lifecycle></Lifecycle> */}
       <DiaryEditor onCreate={onCreate} />
       <div>전체일기 : {data.length}</div>
