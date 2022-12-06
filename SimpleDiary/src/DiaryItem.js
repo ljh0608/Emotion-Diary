@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import React from "react";
 
 const DairyItem = ({
   onEdit,
@@ -9,6 +10,10 @@ const DairyItem = ({
   emotion,
   id,
 }) => {
+  useEffect(() => {
+    console.log(`${id}번째 아이템 렌더`);
+  });
+
   const [isEdit, setIsEdit] = useState(false); //Edit boolean값 is Edit이 트루면 수정중으로 간주하여 코드
   const toggleIsEdit = () => {
     setIsEdit(!isEdit);
@@ -74,4 +79,4 @@ const DairyItem = ({
   );
 };
 
-export default DairyItem;
+export default React.memo(DairyItem);
