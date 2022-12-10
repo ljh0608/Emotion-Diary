@@ -1,19 +1,13 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import React from "react";
+import { DiaryDispacthContext } from "./App";
 
-const DairyItem = ({
-  onEdit,
-  onRemove,
-  author,
-  content,
-  created_date,
-  emotion,
-  id,
-}) => {
+const DairyItem = ({ author, content, created_date, emotion, id }) => {
   useEffect(() => {
     console.log(`${id}번째 아이템 렌더`);
   });
 
+  const { onRemove, onEdit } = useContext(DiaryDispacthContext);
   const [isEdit, setIsEdit] = useState(false); //Edit boolean값 is Edit이 트루면 수정중으로 간주하여 코드
   const toggleIsEdit = () => {
     setIsEdit(!isEdit);
