@@ -40,8 +40,43 @@ const reducer = (state, action) => {
 export const DiaryStateContext = React.createContext();
 export const DiartyDispatchContext = React.createContext();
 
+const dummyData = [
+  {
+    id: 1,
+    emotion: 1,
+    content:
+      "오늘의 일기1번 어디까지 짤리는지 확인하기 위해서 컨텐츠를 채우는 중입니다 25자가 넘어가면 보이지 않습니다",
+    date: 1671112486506,
+  },
+  {
+    id: 2,
+    emotion: 2,
+    content: "오늘의 일기2번",
+    date: 1671112486507,
+  },
+  {
+    id: 3,
+    emotion: 3,
+    content: "오늘의 일기3번",
+    date: 1671112486508,
+  },
+
+  {
+    id: 4,
+    emotion: 4,
+    content: "오늘의 일기4번",
+    date: 1671112486509,
+  },
+  {
+    id: 5,
+    emotion: 5,
+    content: "오늘의 일기5번",
+    date: 1671112486510,
+  },
+];
+
 function App() {
-  const [data, dispatch] = useReducer(reducer, []);
+  const [data, dispatch] = useReducer(reducer, dummyData);
 
   const dataId = useRef(0);
 
