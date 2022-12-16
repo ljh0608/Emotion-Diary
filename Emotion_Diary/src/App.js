@@ -8,8 +8,6 @@ import New from "./pages/New";
 import React, { useReducer } from "react";
 import { useRef } from "react";
 //COMPONENTS
-import MyButton from "./components/MyButton";
-import MyHeader from "./components/MyHeader";
 
 const reducer = (state, action) => {
   let newState = [];
@@ -18,7 +16,11 @@ const reducer = (state, action) => {
       return action.data;
     }
     case "CREATE": {
-      newState = [action.data, ...state];
+      const newItem = {
+        ...action.data,
+      };
+      newState = [newItem, ...state];
+      console.log(newState);
       break;
     }
     case "REMOVE": {
@@ -38,7 +40,7 @@ const reducer = (state, action) => {
 };
 
 export const DiaryStateContext = React.createContext();
-export const DiartyDispatchContext = React.createContext();
+export const DiaryDispatchContext = React.createContext();
 
 const dummyData = [
   {
@@ -86,7 +88,7 @@ function App() {
       type: "CREATE",
       data: {
         id: dataId.current,
-        data: new Date(date).getTime(),
+        date: new Date(date).getTime(),
         content: content,
         emotion: emotion,
       },
@@ -114,7 +116,7 @@ function App() {
 
   return (
     <DiaryStateContext.Provider value={data}>
-      <DiartyDispatchContext.Provider value={{ onCreate, onEdit, onRemove }}>
+      <DiaryDispatchContext.Provider value={{ onCreate, onEdit, onRemove }}>
         <BrowserRouter>
           <div className="App">
             <Routes>
@@ -125,7 +127,7 @@ function App() {
             </Routes>
           </div>
         </BrowserRouter>
-      </DiartyDispatchContext.Provider>
+      </DiaryDispatchContext.Provider>
     </DiaryStateContext.Provider>
   );
 }
