@@ -122,7 +122,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/new" element={<New />}></Route>
-              <Route path="/edit" element={<Edit />}></Route>
+              <Route path="/edit/:id" element={<Edit />}></Route>
               <Route path="/diary/:id" element={<Diary />}></Route>
             </Routes>
           </div>
