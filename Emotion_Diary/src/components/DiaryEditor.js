@@ -5,38 +5,8 @@ import { DiaryDispatchContext } from "./../App";
 import { useRef, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
-const emotionList = [
-  {
-    emotion_id: 1,
-    emotion_img: process.env.PUBLIC_URL + `/assets/emotion1.png`,
-    emotion_descript: "완전 좋음",
-  },
-  {
-    emotion_id: 2,
-    emotion_img: process.env.PUBLIC_URL + `/assets/emotion2.png`,
-    emotion_descript: "좋음",
-  },
-  {
-    emotion_id: 3,
-    emotion_img: process.env.PUBLIC_URL + `/assets/emotion3.png`,
-    emotion_descript: "그럭저럭",
-  },
-  {
-    emotion_id: 4,
-    emotion_img: process.env.PUBLIC_URL + `/assets/emotion4.png`,
-    emotion_descript: "나쁨",
-  },
-  {
-    emotion_id: 5,
-    emotion_img: process.env.PUBLIC_URL + `/assets/emotion5.png`,
-    emotion_descript: "끔찍함",
-  },
-];
-
-const getStringDate = (date) => {
-  return date.toISOString().slice(0, 10);
-};
+import { getStringDate } from "../util/data";
+import { emotionList } from "../util/data";
 
 const DiaryEditor = ({ isEdit, originData }) => {
   const contentRef = useRef();
@@ -50,7 +20,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
     setEmotion(emotion);
   };
 
-  const { onCreate, onEdit } = useContext(DiaryDispatchContext);
+  const { onCreate, onEdit, onRemove } = useContext(DiaryDispatchContext);
 
   const handleSubmit = () => {
     if (content.length < 1) {
@@ -72,6 +42,13 @@ const DiaryEditor = ({ isEdit, originData }) => {
     navigate("/", { replace: true });
   };
 
+  const handleRemove = () => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      onRemove(originData.id);
+      navigate("/", { repalce: true });
+    }
+  };
+
   useEffect(() => {
     if (isEdit) {
       setDate(getStringDate(new Date(parseInt(originData.date))));
@@ -91,6 +68,15 @@ const DiaryEditor = ({ isEdit, originData }) => {
               navigate(-1);
             }}
           ></MyButton>
+        }
+        rightChild={
+          isEdit && (
+            <MyButton
+              text={"삭제하기"}
+              type={"negative"}
+              onClick={handleRemove}
+            ></MyButton>
+          )
         }
       ></MyHeader>
       <div>
