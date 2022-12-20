@@ -5,8 +5,9 @@ import Home from "./pages/Home";
 import Edit from "./pages/Edit";
 import New from "./pages/New";
 
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import { useRef } from "react";
+
 //COMPONENTS
 
 const reducer = (state, action) => {
@@ -20,7 +21,7 @@ const reducer = (state, action) => {
         ...action.data,
       };
       newState = [newItem, ...state];
-      console.log(newState);
+
       break;
     }
     case "REMOVE": {
@@ -36,50 +37,28 @@ const reducer = (state, action) => {
     default:
       return state;
   }
+
+  localStorage.setItem("diary", JSON.stringify(newState));
   return newState;
 };
 
 export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
-const dummyData = [
-  {
-    id: 1,
-    emotion: 1,
-    content:
-      "오늘의 일기1번 어디까지 짤리는지 확인하기 위해서 컨텐츠를 채우는 중입니다 25자가 넘어가면 보이지 않습니다",
-    date: 1671112486506,
-  },
-  {
-    id: 2,
-    emotion: 2,
-    content: "오늘의 일기2번",
-    date: 1671112486507,
-  },
-  {
-    id: 3,
-    emotion: 3,
-    content: "오늘의 일기3번",
-    date: 1671112486508,
-  },
-
-  {
-    id: 4,
-    emotion: 4,
-    content: "오늘의 일기4번",
-    date: 1671112486509,
-  },
-  {
-    id: 5,
-    emotion: 5,
-    content: "오늘의 일기5번",
-    date: 1671112486510,
-  },
-];
-
 function App() {
-  const [data, dispatch] = useReducer(reducer, dummyData);
+  const [data, dispatch] = useReducer(reducer, []);
 
+  useEffect(() => {
+    const localData = localStorage.getItem("diary");
+    if (localData) {
+      const diaryList = JSON.parse(localData).sort(
+        (a, b) => parseInt(b.id) - parseInt(a.id)
+      );
+      dataId.current = parseInt(diaryList[0].id) + 1;
+
+      dispatch({ type: "INIT", data: diaryList });
+    }
+  }, []);
   const dataId = useRef(0);
 
   //CREATE
