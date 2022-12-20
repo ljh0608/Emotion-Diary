@@ -1,8 +1,28 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { DiaryStateContext } from "../App";
+import { useContext, useEffect } from "react";
 
 const Diary = () => {
   const { id } = useParams();
-  console.log(id);
+  const diaryList = useContext(DiaryStateContext);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (diaryList.length >= 1) {
+      const targetDiary = diaryList.find(
+        (it) => parseInt(it.id) === parseInt(id)
+      );
+      console.log(targetDiary);
+      if (targetDiary) {
+        //일기가 존재할때
+      } else {
+        alert("없는 일기입니다.");
+        navigate("/", { replace: true });
+      }
+    }
+  }, [id, diaryList]);
+
   return (
     <div>
       <h1>Diary</h1>
