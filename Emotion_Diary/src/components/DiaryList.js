@@ -1,5 +1,4 @@
-import { IterableDiffers } from "@angular/core";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MyButton from "./MyButton";
 import { useNavigate } from "react-router-dom";
 import DiaryItem from "./DiaryItem";
@@ -14,7 +13,11 @@ const filterOptionList = [
   { value: "good", name: "좋은 감정만" },
   { value: "bad", name: "안좋은 감정만" },
 ];
-const ControlMenu = ({ value, onChange, optionList }) => {
+
+const ControlMenu = React.memo(({ value, onChange, optionList }) => {
+  //고착 컴포넌트를 만들어줘서 전달받는 prop이 값이 바뀌지 않으면 렌더링이 일어나지 않게 메모이제이션 해주는
+  //최적화 기법
+
   return (
     <select
       className="ControlMenu"
@@ -30,7 +33,7 @@ const ControlMenu = ({ value, onChange, optionList }) => {
       ))}
     </select>
   );
-};
+});
 
 const DiaryList = ({ diaryList }) => {
   const navigate = useNavigate();
