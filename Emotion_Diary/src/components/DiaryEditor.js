@@ -81,7 +81,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
       ></MyHeader>
       <div>
         <section>
-          <h4>오늘은 언제인가요?</h4>
+          <h4>날짜 선택</h4>
           <div className="input_box">
             <input
               className="input_date"
